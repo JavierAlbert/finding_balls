@@ -6,14 +6,21 @@ The project goal is to find multi-colored balls with very high accuracy and reca
 
 First we create a simple Matlab widget that let's the user define a polygon with the mouse. Then the program converts the RGB values of the selected region into HSV values and plots the histogram of the Hue value. If we do this for all the images we can get a good approximation of the expected hue values of the balls.
 
+![uno](https://user-images.githubusercontent.com/31891596/51084356-bc81c100-1730-11e9-882b-c97c2ec657f6.JPG)
+
 
 ## Preprocessing
 
 Now on live mode we first check for saturated pixels on RGB channels and we discard this pixels. Then we change to HSV channel and filter all the pixels that are below certain S level. Then we work with the Hue channel and split the remaining pixels into regions that are compatible with the colors that we see on the magic balls (we have this information from the histograms). Later we blurr each component and look for regions where the components intersect (inner edges of the magic balls on H space). Finally we dilate each pixel above certain threshold and build a mask that will filter the image for the next processing step.
 
+![dos](https://user-images.githubusercontent.com/31891596/51084355-bc81c100-1730-11e9-8f03-eefcde15f68b.JPG)
+
+
 ## Circles detection
 
 We pass each image through a Hough based circle finder function. For computational speed purposes, we reduce the image to ¼ of its original size using imresize(). We then enlarge the circles by the opposite factor to get them on the original image coordinates. We allow for a maximum of 7 circles on each image that will go under evaluation on the next step. 
+
+![tres](https://user-images.githubusercontent.com/31891596/51084358-bd1a5780-1730-11e9-8ae9-5a476a63e455.JPG)
 
 
 ## Circles validation
@@ -26,5 +33,6 @@ Then we check for circles that intersect with each other. We don’t want circle
 
 Finally we keep the circles that passed both tests, plot the purple perimeters on the image and save the new images to results folder.
 
+![cuatro](https://user-images.githubusercontent.com/31891596/51084357-bd1a5780-1730-11e9-852b-1d209558734f.JPG)
 
 
